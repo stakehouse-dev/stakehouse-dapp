@@ -1,0 +1,18 @@
+.card {
+  @apply rounded-lg box-border py-3 px-6;
+  @apply flex flex-col items-center;
+  background: #2A2A2A;
+}
+
+.label {
+  @apply text-grey300 text-sm mb-1;
+  @apply flex items-center gap-2;
+}
+
+.value {
+  @apply text-lg font-semibold text-primary;
+
+  &.empty {
+    @apply text-grey300 select-none;
+  }
+}

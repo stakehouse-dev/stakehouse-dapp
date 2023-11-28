@@ -1,0 +1,11 @@
+.page {
+  @apply w-full flex flex-1 justify-center items-stretch lg:px-20 md:px-10 px-5;
+
+  &Container {
+    @apply relative max-w-7xl flex items-center justify-between w-full;
+  }
+
+  &Content {
+    @apply flex flex-col;
+  }
+}

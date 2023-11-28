@@ -1,0 +1,28 @@
+.profile {
+  @apply w-full flex flex-1 justify-center items-stretch lg:px-20 md:px-10 px-5;
+
+  &__container {
+    @apply relative max-w-7xl flex flex-col w-full;
+  }
+
+  &__content {
+    @apply md:flex-1 md:overflow-y-auto;
+  }
+}
+
+.tab {
+  @apply flex border-b border-grey500 justify-center;
+
+  &__item {
+    @apply py-4 px-5 cursor-pointer text-grey300 text-sm font-medium hover:text-primary300;
+
+    &--selected {
+      @extend .tab__item;
+      @apply text-primary700 outline-none border-b-2 border-primary700;
+    }
+  }
+
+  &__panel {
+    @apply pt-6;
+  }
+}

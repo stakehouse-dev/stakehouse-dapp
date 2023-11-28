@@ -1,0 +1,8 @@
+.wrapper {
+  @apply p-4 box-border flex mx-auto text-center items-center justify-center;
+  @apply text-sm font-medium;
+  background: #E0FDE6;
+  border-radius: 64px;
+  width: fit-content;
+  min-width: 400px;
+}

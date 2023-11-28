@@ -1,0 +1,7 @@
+.details {
+  @apply w-full flex flex-1 justify-center items-stretch lg:px-20 md:px-10 px-5;
+
+  &__container {
+    @apply relative max-w-3xl w-full flex flex-col gap-4 py-10;
+  }
+}

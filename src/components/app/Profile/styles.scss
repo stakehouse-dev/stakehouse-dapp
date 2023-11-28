@@ -1,0 +1,218 @@
+.profile-header {
+  @apply py-8 flex justify-center w-full;
+
+  &__container {
+    @apply flex flex-col gap-6 items-center w-full;
+  }
+
+  &__info-card {
+    @apply rounded-lg border border-grey500 flex flex-col w-full sm:w-auto sm:flex-row overflow-hidden;
+
+    div {
+      @apply border-grey500 flex flex-col;
+      padding: 10px;
+      border-right-width: 1px;
+
+      &:last-child {
+        border: none;
+      }
+
+      @media (max-width: 640px) {
+        border-right-width: 0px;
+        border-bottom-width: 1px;
+      }
+
+      span {
+        @apply text-grey600 font-medium text-xs leading-5 text-center;
+      }
+    }
+  }
+
+  &__btn-group {
+    @apply flex items-center gap-2;
+  }
+
+  &__setting {
+    @apply cursor-pointer p-2.5 rounded-full border border-grey500 hover:border-grey100 hover:bg-grey200 transition-all;
+  }
+}
+
+.table {
+  @apply w-full;
+
+  th {
+    @apply px-6 py-3 text-left text-grey300 text-xs font-medium;
+  }
+
+  tbody {
+    tr {
+      @apply h-16;
+
+      td {
+        @extend th;
+        @apply text-sm text-grey25;
+
+        .description {
+          a {
+            @apply text-primary500 cursor-pointer;
+          }
+        }
+      }
+
+      &:nth-child(2n + 1) {
+        @apply bg-grey800;
+      }
+    }
+  }
+
+  &__empty {
+    @apply w-full py-4 flex justify-center bg-grey800 text-grey25 font-medium;
+  }
+
+  &__loading {
+    @apply w-full flex justify-center py-6;
+  }
+
+  &--validator {
+    td {
+      &:last-child {
+        background-color: #00ed7b0d;
+        width: 160px;
+      }
+    }
+
+    td,
+    th {
+      &:last-child {
+        text-align: center;
+      }
+    }
+  }
+
+  &--activity {
+    min-width: 500px;
+
+    .badge--status {
+      @apply flex gap-1 items-center bg-primary300 text-black rounded-full w-max;
+      padding: 2px 10px;
+    }
+  }
+}
+
+.validator {
+  @apply flex flex-col w-full overflow-x-auto;
+
+  &__guide {
+    @apply text-sm text-white font-medium text-center py-6;
+
+    span {
+      @apply text-primary700;
+    }
+  }
+}
+
+.saveth {
+  @apply flex flex-col gap-3 py-3 m-auto;
+  max-width: 778px;
+
+  &__header {
+    @apply flex items-center gap-3 w-full;
+
+    h3 {
+      @apply m-0 text-white font-semibold text-base;
+    }
+  }
+
+  &__content {
+    @apply flex items-stretch gap-3 sm:gap-1 flex-col sm:flex-row;
+  }
+
+  &__card {
+    @apply flex flex-col justify-between border border-grey600 rounded-2xl p-4 pb-0;
+
+    &--total-rewards {
+      @apply mb-2 rounded-2xl bg-grey200 px-4 py-2 w-full sm:w-60;
+
+      p {
+        @apply m-0 text-grey700 font-medium text-sm;
+      }
+
+      h2 {
+        @apply text-primary500 font-bold text-2xl;
+      }
+    }
+
+    &--graph {
+      @extend .saveth__card;
+      @apply p-6;
+    }
+  }
+
+  &__info {
+    @apply flex flex-col gap-3 px-2 pt-4;
+
+    &__title {
+      @apply text-grey700 font-medium text-sm;
+    }
+
+    &__field {
+      @apply flex justify-between items-center;
+
+      div {
+        @apply flex items-center gap-1 text-white font-medium text-sm;
+      }
+
+      p {
+        @apply text-white font-semibold text-sm;
+      }
+    }
+
+    &__desc {
+      @apply flex justify-center mt-1 w-full;
+
+      p {
+        @apply px-1 w-max text-grey100 text-xs italic;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+  &__detail-card {
+    @extend .saveth__card;
+    @apply flex-1 sm:min-h-0;
+    min-height: 320px;
+
+    &__title {
+      @apply mt-2 mb-4 text-grey700 font-medium text-sm;
+    }
+
+    &__label {
+      @apply flex items-center gap-2 mb-2 pl-2 text-grey700 font-medium text-sm;
+    }
+
+    &__link {
+      @apply flex items-center gap-1 cursor-pointer mb-2 ml-2 text-primary700 font-medium text-sm;
+    }
+  }
+}
+
+.btn-details {
+  @apply flex items-center p-2 h-6 w-6 rounded-full border border-primary500;
+
+  &__label {
+    @apply text-white text-sm font-normal w-0 opacity-0;
+    transition: width 0.5s ease;
+  }
+
+  &:hover {
+    border-radius: 0.5rem;
+    padding-left: 12px;
+    padding-right: 12px;
+    width: auto;
+    height: auto;
+    .btn-details__label {
+      @apply w-12 mr-2 opacity-100;
+    }
+  }
+}

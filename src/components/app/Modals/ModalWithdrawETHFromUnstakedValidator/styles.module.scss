@@ -1,0 +1,19 @@
+.field {
+  @apply flex px-3.5 py-3 justify-between select-none items-center;
+  @apply box-border border border-border rounded-lg;
+}
+
+.textLabel {
+  @apply flex items-center gap-3 mb-2;
+  @apply text-sm text-grey300;
+}
+
+.learnMoreLink {
+  @apply underline;
+  transition: 0.2s all;
+  color: #389E66;
+
+  &:hover {
+    @apply opacity-70;
+  }
+}

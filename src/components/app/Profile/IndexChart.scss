@@ -1,0 +1,32 @@
+.link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #d0d5dd;
+  margin: 0;
+  margin-top: 4px;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.linkWrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  right: 10px;
+  bottom: 20px;
+  width: 100%;
+}

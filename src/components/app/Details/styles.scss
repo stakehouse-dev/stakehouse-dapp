@@ -1,0 +1,127 @@
+.details-header {
+  @apply flex flex-col w-full gap-6;
+
+  &__main {
+    @apply w-full flex items-center gap-6;
+  }
+
+  &__name {
+    @apply text-white text-2xl font-semibold;
+  }
+}
+
+.details-body {
+  @apply flex items-stretch gap-4;
+
+  &--left {
+    @apply flex flex-col border border-grey600 rounded-2xl p-6 w-300;
+  }
+
+  &--right {
+    @apply flex flex-col flex-1 border border-grey600 rounded-2xl p-6;
+  }
+
+  &__title {
+    @apply text-white font-medium text-sm mb-4;
+  }
+
+  &__card {
+    @apply flex flex-col gap-3 mb-11 rounded-2xl bg-grey50 py-2.5 px-4 w-full;
+
+    &__row {
+      @apply flex justify-between items-center w-full;
+    }
+  }
+
+  &__row {
+    @apply flex justify-between items-center px-4;
+  }
+
+  &__label {
+    @apply flex items-center gap-2 mb-2 pl-2 text-grey100 font-medium text-sm;
+
+    span {
+      @apply text-white;
+    }
+  }
+
+  .field__name {
+    @apply flex items-center gap-1 text-white font-medium text-sm;
+  }
+
+  .field__value {
+    @apply m-0 text-white font-semibold text-sm;
+
+    &--green {
+      @extend .field__value;
+      @apply text-primary;
+    }
+
+    &--yellow {
+      @extend .field__value;
+      @apply text-yellow;
+    }
+  }
+}
+
+.details-footer {
+  @apply flex flex-col gap-5 border border-grey600 rounded-2xl p-5;
+
+  &__header {
+    @apply flex w-full justify-between items-center;
+  }
+
+  &__title {
+    @apply text-white font-medium text-sm;
+  }
+
+  &__menu-btn {
+    @apply p-1 rounded-full border border-grey500 hover:border-grey100 hover:bg-grey200 transition-all;
+
+    &--disabled {      
+      @extend .details-footer__menu-btn;
+      @apply hover:bg-black hover:border-grey500 cursor-not-allowed;      
+    }
+  }
+
+  &__btns {
+    @apply w-full flex items-center gap-6;
+  }
+}
+
+.chip {
+  @apply flex items-center gap-2 rounded-full text-grey500 font-medium text-sm;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.06);
+
+  .dot {
+    @apply rounded-full bg-grey500 w-2 h-2;
+  }
+
+  &--mintable {
+    @extend .chip;
+    @apply text-primary500;
+
+    .dot {
+      @apply bg-primary;
+    }
+  }
+
+  &--withdraw {
+    @extend .chip;
+    @apply text-white;
+
+    .dot {
+      @apply bg-white;
+    }
+  }
+
+  &--ragequit {
+    @extend .chip;
+    @apply text-red;
+
+    .dot {
+      @apply bg-red;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "short_name": "Stakehouse dApp",
+  "name": "Stakehouse dApp",
+  "iconPath": "favicon.svg",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "providedBy": { "name": "Blockswap Network", "url": "https://www.blockswap.network/" },
+  "description": "Monitor the performance of Stakehouse validators."
+}

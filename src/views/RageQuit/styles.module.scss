@@ -1,0 +1,15 @@
+.wrapper {
+  @apply max-w-lg m-auto;
+}
+
+.title {
+  @apply text-primary text-center font-bold text-xl mb-2;
+}
+
+.stats {
+  @apply grid grid-cols-3 gap-2 mb-6;
+}
+
+.steps {
+  @apply flex flex-col gap-3;
+}
