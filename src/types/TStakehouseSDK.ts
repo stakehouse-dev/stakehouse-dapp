@@ -78,6 +78,7 @@ export type TStakehouseSDK = {
     topUpKNOTWithOneEth: (...args: any) => any
     dETHMetadata: (...args: any) => any
     getStakehouse: (...args: any) => any
+    minimumTopUpRequired: (...args: any) => any
   }
   subgraph: {
     getAllIndexesOwnedByAUser: (...args: any) => any
@@ -161,6 +162,8 @@ export type TStakehouseSDK = {
     reportVoluntaryWithdrawal: (...args: any) => any
     verifyAndReportAllSweepsAtOnce: (...args: any) => any
     batchUnwrapDETH: (...args: any) => any
+    getDAOValidatorsForReporting: (...args: any) => any
+    verifyAndReportSweepsForMultipleBLSKeys: (...args: any) => any
   }
   multipartyRageQuit: {
     deployRageQuitAssistant: (...args: any) => any

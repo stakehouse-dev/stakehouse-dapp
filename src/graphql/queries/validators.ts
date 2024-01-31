@@ -56,3 +56,12 @@ export const NodeRunnerByValidatorQuery = gql`
     }
   }
 `
+
+export const getStakehouseAccounts = gql`
+  query getStakehouseAccounts($blsPublicKeys: [String]!) {
+    stakehouseAccounts(where: { id_in: $blsPublicKeys }) {
+      stakeHouse
+      id
+    }
+  }
+`

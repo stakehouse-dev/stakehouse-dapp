@@ -50,6 +50,14 @@ We welcome contributions to Stakehouse Dapp. If you'd like to contribute, please
 4. Push your changes to your fork.
 5. Create a pull request to the main repository.
 
+## Minting derivatives and joining selected stakehouses
+
+If you wish to deploy and use the Dapp and allow stakers to mint derivatives only in your selected stakehouses, please follow these guidelines:
+
+1. Fork the project.
+2. Open `src/graphql/queries/tickerNames.ts`.
+3. Replace `stakehouses` on line 5 with `stakehouses(where:{sETHTicker_in:[<LIST_OF_TICKERS>]})`
+
 ## License
 
 This project is licensed under MIT - see the [LICENSE.md](./LICENSE.md) file for details.

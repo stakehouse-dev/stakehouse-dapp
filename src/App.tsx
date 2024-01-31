@@ -95,15 +95,15 @@ const client = createClient({
 
 function App() {
   return (
-    <IntercomProvider appId="qggu7t5c" apiBase="https://api-iam.intercom.io" autoBoot>
-      <WagmiConfig client={client}>
-        <ApolloProvider client={GraphqlClient}>
-          <BlockswapSDKProvider>
-            <UserProvider>
-              <StakingStoreProvider>
-                <MintStoreProvider>
-                  <GraphqlProvider>
-                    <Router>
+    <Router>
+      <IntercomProvider appId="qggu7t5c" apiBase="https://api-iam.intercom.io" autoBoot>
+        <WagmiConfig client={client}>
+          <ApolloProvider client={GraphqlClient}>
+            <BlockswapSDKProvider>
+              <UserProvider>
+                <StakingStoreProvider>
+                  <MintStoreProvider>
+                    <GraphqlProvider>
                       <Routes>
                         <Route
                           path="/graphql-playground/:id/:account"
@@ -264,15 +264,15 @@ function App() {
                           <Route path="*" element={<NotFoundPage />} />
                         </Route>
                       </Routes>
-                    </Router>
-                  </GraphqlProvider>
-                </MintStoreProvider>
-              </StakingStoreProvider>
-            </UserProvider>
-          </BlockswapSDKProvider>
-        </ApolloProvider>
-      </WagmiConfig>
-    </IntercomProvider>
+                    </GraphqlProvider>
+                  </MintStoreProvider>
+                </StakingStoreProvider>
+              </UserProvider>
+            </BlockswapSDKProvider>
+          </ApolloProvider>
+        </WagmiConfig>
+      </IntercomProvider>
+    </Router>
   )
 }
 

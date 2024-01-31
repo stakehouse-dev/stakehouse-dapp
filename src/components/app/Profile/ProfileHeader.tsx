@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useAccount, useBalance } from 'wagmi'
 import { BigNumber } from 'ethers'
 
-import { ModalWithdrawDETH, ModalInsufficientBalance } from 'components/app/Modals'
-import { Button, Dropdown } from 'components/shared'
+import {
+  ModalWithdrawDETH,
+  ModalInsufficientBalance,
+  ModalReportBalanceForRedeem
+} from 'components/app/Modals'
+import { Button, Dropdown, LoadingModal } from 'components/shared'
 
 import { useSDK, useUser } from 'hooks'
 import { cutDecimals, weiToEthNum } from 'utils/global'
@@ -16,6 +20,7 @@ import SettingIcon from 'assets/images/icon-settings.svg'
 import { ReactComponent as WithdrawIcon } from 'assets/images/icon-withdraw.svg'
 import { ReactComponent as MetamaskIcon } from 'assets/images/icon-metamask-outline.svg'
 import './styles.scss'
+import { BEACON_NODE_URL } from 'constants/chains'
 
 const ProfileHeader: FC = () => {
   const [openInsufficientModal, setOpenInsufficientModal] = useState(false)
@@ -23,6 +28,9 @@ const ProfileHeader: FC = () => {
   const [validatorsCreatedCount, setValidatorsCreatedCount] = useState(0)
   const [validatorsJoinedCount, setValidatorsJoinedCount] = useState(0)
   const [housesCreatedCount, setHousesCreatedCount] = useState(0)
+  const [isLSDDAO, setIsLSDDAO] = useState(false)
+  const [validatorsReport, setValidatorsReport] = useState([])
+  const [openReportBalanceModal, setOpenReportBalanceModal] = useState(false)
 
   const { validators, knotsData } = useUser()
   const { sdk } = useSDK()
@@ -59,6 +67,23 @@ const ProfileHeader: FC = () => {
           account?.address?.toLowerCase() || ''
         )
         setHousesCreatedCount(housesCreatedResponse.length)
+
+        try {
+          const daoValidatorsForReporting = await sdk.withdrawal.getDAOValidatorsForReporting(
+            BEACON_NODE_URL,
+            account?.address?.toLowerCase()
+          )
+          if (!daoValidatorsForReporting || daoValidatorsForReporting.length === 0) {
+            setIsLSDDAO(false)
+            setValidatorsReport([])
+          } else {
+            setIsLSDDAO(true)
+            setValidatorsReport(daoValidatorsForReporting)
+          }
+        } catch (err) {
+          console.log('getDAOValidatorsForReporting error: ', err)
+          setIsLSDDAO(false)
+        }
       }
     }
     fetchValidatorCreated()
@@ -77,6 +102,32 @@ const ProfileHeader: FC = () => {
 
   const menuOptions: TMenu[] =
     activeConnector?.name === 'WalletConnect'
+      ? isLSDDAO
+        ? [
+            {
+              id: 0,
+              label: 'Withdraw all dETH',
+              icon: <WithdrawIcon />,
+              disabled: totalWithdrawableDETH <= 0,
+              onClick: () => setIsWithdrawDETHModalOpen(true)
+            },
+            {
+              id: 1,
+              label: 'Batch report balance',
+              icon: <WithdrawIcon />,
+              onClick: () => handleReportBalance()
+            }
+          ]
+        : [
+            {
+              id: 0,
+              label: 'Withdraw all dETH',
+              icon: <WithdrawIcon />,
+              disabled: totalWithdrawableDETH <= 0,
+              onClick: () => setIsWithdrawDETHModalOpen(true)
+            }
+          ]
+      : isLSDDAO
       ? [
           {
             id: 0,
@@ -84,6 +135,18 @@ const ProfileHeader: FC = () => {
             icon: <WithdrawIcon />,
             disabled: totalWithdrawableDETH <= 0,
             onClick: () => setIsWithdrawDETHModalOpen(true)
+          },
+          {
+            id: 1,
+            label: 'Batch report balance',
+            icon: <WithdrawIcon />,
+            onClick: () => handleReportBalance()
+          },
+          {
+            id: 2,
+            label: 'Add dETH to MetaMask',
+            icon: <MetamaskIcon />,
+            onClick: () => handleAddTokenToWallet()
           }
         ]
       : [
@@ -101,6 +164,13 @@ const ProfileHeader: FC = () => {
             onClick: () => handleAddTokenToWallet()
           }
         ]
+
+  const handleReportBalance = async () => {
+    if (validatorsReport.length > 0) {
+      setOpenReportBalanceModal(true)
+    }
+  }
+
   const handleCreateValidator = () => {
     if (Number(ethBalance) < 32) {
       handleOpenModal()
@@ -111,6 +181,13 @@ const ProfileHeader: FC = () => {
 
   const handleOpenModal = () => setOpenInsufficientModal(true)
   const handleCloseModal = () => setOpenInsufficientModal(false)
+
+  const handleCloseReportBalanceModal = () => {
+    setOpenReportBalanceModal(false)
+  }
+  const handleSubmittedReportBalance = () => {
+    setOpenReportBalanceModal(false)
+  }
 
   return (
     <div className="profile-header">
@@ -149,6 +226,13 @@ const ProfileHeader: FC = () => {
         open={isWithdrawDETHModalOpen}
         onClose={() => setIsWithdrawDETHModalOpen(false)}
         indexedOnly
+      />
+      <ModalReportBalanceForRedeem
+        open={openReportBalanceModal}
+        validators={validatorsReport}
+        dETHAmount={'0'}
+        onClose={handleCloseReportBalanceModal}
+        onSubmitted={handleSubmittedReportBalance}
       />
     </div>
   )

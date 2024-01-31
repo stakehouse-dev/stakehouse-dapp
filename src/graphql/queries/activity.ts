@@ -15,6 +15,11 @@ export const ActivityQuery = gql`
           "SIGNING_KEY_RE_ENCRYPTION"
           "SLOT_SLASHED"
           "DETH_REWARDS_MINTED"
+          "VALIDATOR_UNSTAKED"
+          "RAGE_QUIT_ASSISTANT_DEPLOYED"
+          "RAGE_QUIT_LP_MINTED"
+          "RAGE_QUIT_LP_BURNED"
+          "NODE_OPERATOR_CLAIMED_UNSTAKED_ETH"
         ]
         from: $account
       }

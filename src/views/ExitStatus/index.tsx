@@ -17,6 +17,7 @@ import {
 } from 'components/shared'
 import { BEACON_NODE_URL } from 'constants/chains'
 
+import styles from './styles.module.scss'
 import { useSDK } from 'hooks'
 import { BalanceReportT } from 'types'
 import { convertDateToString } from 'utils/global'
@@ -55,7 +56,13 @@ const ExitStatus = () => {
     status,
     setSubmitted,
     isMultiRageQuit,
-    setIsMultiRageQuit
+    setIsMultiRageQuit,
+    handleTopUpSlashedSlot,
+    totalTopupRequired,
+    topUpRequired,
+    setTopUpRequired,
+    loadingTopup,
+    setLoadingTopup
   } = useReportBalance()
 
   const [timeLeft, setTimeLeft] = useState<number>(32 * 60)
@@ -183,6 +190,27 @@ const ExitStatus = () => {
           onClose={handleCloseConfirmExitValidatorModal}
           onConfirm={handleGoRageQuit}
         />
+        <ModalDialog
+          open={topUpRequired.length > 0}
+          onClose={() => setTopUpRequired([])}
+          controlsClosableOnly>
+          <DefaultModalView
+            title="Topup Validators"
+            message={`Some validators in the stakehouse require a total topup of ${
+              totalTopupRequired ?? 0
+            } ETH before you can exit. Please continue if you wish to topup for each validator and exit.`}>
+            <div className="flex items-center w-full justify-center gap-2.5">
+              <Button
+                size="lg"
+                disabled={loadingTopup}
+                onClick={() => {
+                  handleTopUpSlashedSlot(blsKey || '')
+                }}>
+                Continue
+              </Button>
+            </div>
+          </DefaultModalView>
+        </ModalDialog>
         <ModalDialog
           open={isSubmitted && !isMultiRageQuit && status !== TEligibilityStatus.Eligible}
           onClose={() => setSubmitted(false)}

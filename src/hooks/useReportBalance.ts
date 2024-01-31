@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 import { useSDK } from './useSDK'
 import { BalanceReportT } from 'types'
 import { BEACON_NODE_URL } from 'constants/chains'
-import { noty } from 'utils/global'
+import { noty, notifyHash, bigToNum } from 'utils/global'
 import { TEligibilityStatus } from 'types/ragequit'
 import { customErrors } from 'lib/ragequit'
 import { useAccount } from 'wagmi'
@@ -15,6 +15,8 @@ export const useReportBalance = () => {
   const [status, setStatus] = useState<TEligibilityStatus>()
   const [signature, setSignature] = useState<BalanceReportT>()
   const [isMultiRageQuit, setIsMultiRageQuit] = useState<boolean>(false)
+  const [topUpRequired, setTopUpRequired] = useState([])
+  const [loadingTopup, setLoadingTopup] = useState(false)
 
   const { sdk } = useSDK()
   const account = useAccount()
@@ -25,6 +27,55 @@ export const useReportBalance = () => {
     setSubmitting(false)
     setSignature(undefined)
   }
+
+  const handleTopUpSlashedSlot = useCallback(
+    async (blsPublicKey: string) => {
+      if (!account?.address || !validators || !sdk) return
+
+      setLoadingTopup(true)
+      try {
+        const stakeHouse = validators.filter(
+          (item) => item.id.toLowerCase() == blsPublicKey.toLowerCase()
+        )[0].stakeHouseMetadata?.id
+
+        await Promise.all(
+          topUpRequired.map(async ({ blsPublicKey, amount }) => {
+            const tx = await sdk.utils.topUpSlashedSlot(
+              stakeHouse,
+              blsPublicKey,
+              account?.address,
+              amount,
+              amount
+            )
+            notifyHash(tx.hash)
+            await tx.wait()
+          })
+        )
+      } catch (err) {
+        console.log('handleTopUp error: ', err)
+        noty('Failed to topup. Please retry')
+        setSubmitting(false)
+        setLoadingTopup(false)
+        setTopUpRequired([])
+      }
+
+      setLoadingTopup(false)
+      setTopUpRequired([])
+    },
+    [sdk, validators, account?.address, topUpRequired]
+  )
+
+  const totalTopupRequired = useMemo(() => {
+    if (topUpRequired.length > 0) {
+      let result = 0
+      topUpRequired.forEach(({ amount }) => {
+        result += bigToNum(amount)
+      })
+      return result
+    }
+
+    return 0
+  }, [topUpRequired])
 
   const handleSubmit = async (blsPublicKey: string) => {
     if (!sdk) {
@@ -54,6 +105,16 @@ export const useReportBalance = () => {
         )[0].stakeHouseMetadata?.id
 
         try {
+          try {
+            const result = await sdk.utils.minimumTopUpRequired(stakehouseAddress, account?.address)
+            if (result.length > 0) {
+              setTopUpRequired(result)
+              return
+            }
+          } catch (err) {
+            console.log('minimumTopUpRequired error: ', err)
+          }
+
           const result: boolean = await sdk.utils.rageQuitChecks(
             stakehouseAddress,
             account?.address,
@@ -91,6 +152,12 @@ export const useReportBalance = () => {
     status,
     setSubmitted,
     isMultiRageQuit,
-    setIsMultiRageQuit
+    setIsMultiRageQuit,
+    handleTopUpSlashedSlot,
+    totalTopupRequired,
+    topUpRequired,
+    setTopUpRequired,
+    loadingTopup,
+    setLoadingTopup
   }
 }

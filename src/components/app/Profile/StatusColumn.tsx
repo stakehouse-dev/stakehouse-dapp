@@ -137,7 +137,7 @@ const StatusColumn: FC<IProps> = ({ validator, knotData, onMint, report }) => {
         title="Error"
         message={error}
         actionButtonContent="Go To LSD dapp"
-        onAction={() => window.open('https://goerli-lsd.joinstakehouse.com/', '_blank')}
+        onAction={() => window.open('https://lsd.joinstakehouse.com/', '_blank')}
       />
     </>
   )

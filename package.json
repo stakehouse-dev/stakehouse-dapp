@@ -6,7 +6,7 @@
   "dependencies": {
     "@apollo/client": "^3.6.8",
     "@apollo/explorer": "^0.1.0",
-    "@blockswaplab/stakehouse-sdk": "5.6.19",
+    "@blockswaplab/stakehouse-sdk": "5.6.29",
     "@craco/craco": "^6.4.5",
     "@headlessui/react": "^1.6.4",
     "@testing-library/jest-dom": "^5.16.4",

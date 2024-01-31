@@ -30,6 +30,7 @@ const DepositSection: FC<IProps> = ({ onRegisterDepositObject, depositObject }) 
   const [file, setFile] = useState<File | null>(null)
   const [uploading, toggleUploading] = useState(false)
   const [depositError, setError] = useState('')
+  const [isApproving, setApproving] = useState(false)
 
   const handleUploadDepositObject = async (file: File, onClear: () => void) => {
     // checking if address is flagged
@@ -39,17 +40,19 @@ const DepositSection: FC<IProps> = ({ onRegisterDepositObject, depositObject }) 
       setOpenModal(true)
       return
     }
-
     onClear()
     setFile(file)
-    toggleUploading(true)
+    // toggleUploading(true)
+    setApproving(true)
+    await handleRegisterDepositObject(file)
+    setApproving(false)
   }
 
   const handleCloseModal = () => {
     setOpenModal(false)
   }
 
-  const handleRegisterDepositObject = async () => {
+  const handleRegisterDepositObject = async (file: File) => {
     if (file && sdk) {
       try {
         const text = await file.text()
@@ -85,10 +88,10 @@ const DepositSection: FC<IProps> = ({ onRegisterDepositObject, depositObject }) 
     setFile(null)
     onRegisterDepositObject(null)
   }
-  const handleCloseApproveModal = () => {
-    toggleUploading(false)
-    setError('')
-  }
+  // const handleCloseApproveModal = () => {
+  //   toggleUploading(false)
+  //   setError('')
+  // }
 
   if (depositObject && file && !uploading) {
     return (
@@ -111,15 +114,15 @@ const DepositSection: FC<IProps> = ({ onRegisterDepositObject, depositObject }) 
 
   return (
     <>
-      <Dropzone onChange={handleUploadDepositObject} size="sm">
+      <Dropzone onChange={handleUploadDepositObject} size="sm" disabled={isApproving}>
         Drag and drop your <strong>deposit_data.json</strong> file here
       </Dropzone>
-      <ModalApproveKeyUploading
+      {/* <ModalApproveKeyUploading
         open={uploading}
         onApprove={handleRegisterDepositObject}
         onClose={handleCloseApproveModal}
         depositError={depositError}
-      />
+      /> */}
       <TransactionRejectedModal open={openModal} onClose={handleCloseModal} />
     </>
   )

@@ -331,6 +331,71 @@ const Description: FC<{ activity: any; blsKeyToTxHashes: any }> = ({
           </a>
         </span>
       )
+    case 'VALIDATOR_UNSTAKED':
+      return (
+        <span className="description">
+          Validator Unstaked{' '}
+          <a
+            href={makeEtherscanLink(activity.id)}
+            target="_blank"
+            rel="noreferrer"
+            className={'text-primary'}>
+            (check TX here)
+          </a>
+        </span>
+      )
+    case 'RAGE_QUIT_ASSISTANT_DEPLOYED':
+      return (
+        <span className="description">
+          Rage Quit Assistant Deployed{' '}
+          <a
+            href={makeEtherscanLink(activity.id.slice(0, 66))}
+            target="_blank"
+            rel="noreferrer"
+            className={'text-primary'}>
+            (check TX here)
+          </a>
+        </span>
+      )
+    case 'RAGE_QUIT_LP_MINTED':
+      return (
+        <span className="description">
+          Rage Quit LP Minted{' '}
+          <a
+            href={makeEtherscanLink(activity.id.slice(0, 66))}
+            target="_blank"
+            rel="noreferrer"
+            className={'text-primary'}>
+            (check TX here)
+          </a>
+        </span>
+      )
+    case 'RAGE_QUIT_LP_BURNED':
+      return (
+        <span className="description">
+          Rage Quit LP Burned{' '}
+          <a
+            href={makeEtherscanLink(activity.id.slice(0, 66))}
+            target="_blank"
+            rel="noreferrer"
+            className={'text-primary'}>
+            (check TX here)
+          </a>
+        </span>
+      )
+    case 'NODE_OPERATOR_CLAIMED_UNSTAKED_ETH':
+      return (
+        <span className="description">
+          Node Operator Claimed Unstaked ETH{' '}
+          <a
+            href={makeEtherscanLink(activity.id)}
+            target="_blank"
+            rel="noreferrer"
+            className={'text-primary'}>
+            (check TX here)
+          </a>
+        </span>
+      )
     default:
       return <></>
   }

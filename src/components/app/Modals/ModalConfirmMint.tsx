@@ -62,14 +62,14 @@ const ModalConfirmMint: FC<IProps> = ({
       let result
       if (from === 'JOIN') {
         result = await sdk.joinStakehouse(
-          account,
+          account.address,
           selectedTicker.id,
           selectedTicker.brandId,
           knotIndex,
           signature
         )
       } else {
-        result = await sdk.createStakehouse(account, selectedTicker, knotIndex, signature)
+        result = await sdk.createStakehouse(account.address, selectedTicker, knotIndex, signature)
       }
       notifyHash(result.hash)
       await result.wait()
@@ -116,7 +116,7 @@ const ModalConfirmMint: FC<IProps> = ({
               ? 'This will mint 24 dETH and 8 SLOT tokens. You will hold 4 SLOT tokens in your Stakehouse Vault to maintain validator ownership. These tokens belong to you and are redeemable. '
               : 'This will mint 24 dETH and 8 SLOT tokens. You will hold 4 SLOT tokens in your Stakehouse Vault to maintain validator ownership. These tokens belong to you and are redeemable. '}
             <a
-              href="https://docs.joinstakehouse.com/protocol/learn/slottokens"
+              href="https://docs-ipfs.joinstakehouse.com/protocol/learn/slottokens"
               target={'_blank'}
               className="underline"
               rel={'noreferrer noopener'}>

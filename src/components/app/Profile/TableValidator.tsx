@@ -100,6 +100,11 @@ const TableValidator: FC<IProps> = ({ isLoading, data, knotData }) => {
                 <Tooltip message="The amount of derivative ETH associated with this validator." />
               </div>
             </th>
+            {/* <th>
+              <div className="flex items-center justify-center gap-1">
+                CIP Status <Tooltip message="Backup and recovery for validator keys." />
+              </div>
+            </th> */}
             <th>
               <div className="flex items-center justify-center gap-1">
                 Details

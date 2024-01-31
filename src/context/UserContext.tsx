@@ -1,10 +1,19 @@
-import { createContext, FC, PropsWithChildren, useEffect, useState, useCallback } from 'react'
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo
+} from 'react'
 import { useQuery } from '@apollo/client'
 import { useAccount } from 'wagmi'
 
 import { savETHIndexGlobalQuery } from 'graphql/queries/knot'
 import { ValidatorT } from 'types'
 import { useSDK } from 'hooks'
+import { useQueryString } from 'hooks/useQueryString'
 
 export interface UserContextProps {
   userAddress: string
@@ -56,9 +65,25 @@ const UserProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isKnotsDataLoading, setKnotsDataLoading] = useState(false)
 
   const account = useAccount()
+  const [spoofedAddress, setSpoofedAddress] = useState<string>('')
+
+  const queryString = useQueryString()
+  const spoofedAddressFromQuery = queryString.get('address') ?? ''
+
+  useEffect(() => {
+    setSpoofedAddress(spoofedAddressFromQuery)
+  }, [])
+
   const { sdk } = useSDK()
 
-  const userAddress = account?.address || ''
+  const userAddress = useMemo(
+    () =>
+      // eslint-disable-next-line no-undef
+      spoofedAddress && process.env.REACT_APP_DEBUG === 'true'
+        ? spoofedAddress
+        : account?.address || '',
+    [spoofedAddress, account]
+  )
 
   const refetchValidators = useCallback(async () => {
     if (sdk && userAddress) {

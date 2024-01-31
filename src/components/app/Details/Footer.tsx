@@ -92,6 +92,7 @@ const DetailsFooter: FC<DetailsFooterProps> = ({ validator, status, onRefresh })
   const [isUnstakable, setUnstakable] = useState(false)
   const [isClaimModalOpen, setIsClaimModalOpen] = useState<boolean>(false)
   const [isClaimed, setIsClaimed] = useState<boolean>(false)
+  const [exitEpoch, setExitEpoch] = useState<string>()
 
   useEffect(() => {
     const checkIfClaimed = async () => {
@@ -134,6 +135,7 @@ const DetailsFooter: FC<DetailsFooterProps> = ({ validator, status, onRefresh })
             BEACON_NODE_URL,
             validator.id
           )
+          setExitEpoch(finalisedEpochReport.exitEpoch)
           const authenticatedReport: BalanceReportT = await sdk.balanceReport.authenticateReport(
             BEACON_NODE_URL,
             finalisedEpochReport
@@ -234,6 +236,16 @@ const DetailsFooter: FC<DetailsFooterProps> = ({ validator, status, onRefresh })
             onClick: () =>
               isReadyToQuit ? setIsReportWithdrawalModalOpen(true) : setIsExitValidatorModal(true)
           }
+          // {
+          //   id: 4,
+          //   label: 'Recover Validator',
+          //   icon: <ArrowsLoopIcon />,
+          //   disabled:
+          //     !isValidatorFunctional ||
+          //     isRageQuitted(validator) ||
+          //     cipStatus !== TCipStatus.FullySecured,
+          //   onClick: () => setIsDecryptEligibilityModalOpen(true)
+          // }
         ]
       : [
           {
@@ -266,6 +278,16 @@ const DetailsFooter: FC<DetailsFooterProps> = ({ validator, status, onRefresh })
                 ? navigate(`/exit-validator/${validator?.id}/status`)
                 : setIsExitValidatorModal(true)
           }
+          // {
+          //   id: 5,
+          //   label: 'Recover Validator',
+          //   icon: <ArrowsLoopIcon />,
+          //   disabled:
+          //     !isValidatorFunctional ||
+          //     isRageQuitted(validator) ||
+          //     cipStatus !== TCipStatus.FullySecured,
+          //   onClick: () => setIsDecryptEligibilityModalOpen(true)
+          // }
         ]
 
   useEffect(() => {
@@ -366,7 +388,9 @@ const DetailsFooter: FC<DetailsFooterProps> = ({ validator, status, onRefresh })
         <div className="details-footer__btns">
           <Button
             variant="secondary"
-            disabled={isSubmitting || !reportBalanceAvailable}
+            disabled={
+              isSubmitting || !reportBalanceAvailable || exitEpoch != '18446744073709551615'
+            }
             style={{ flex: 1, color: '#fff' }}
             onClick={handleOpenReportModal}>
             Report Balance
@@ -423,11 +447,11 @@ const DetailsFooter: FC<DetailsFooterProps> = ({ validator, status, onRefresh })
         onClose={() => setIsIsolateDETHModalOpen(false)}
       />
 
-      <ModalDecryptEligibility
+      {/* <ModalDecryptEligibility
         open={isDecryptEligibilityModalOpen}
         validator={validator}
         onClose={() => setIsDecryptEligibilityModalOpen(false)}
-      />
+      /> */}
 
       <ModalApproveMint
         open={openMintModal}

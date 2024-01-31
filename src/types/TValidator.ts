@@ -28,3 +28,23 @@ export enum ValidatorLifecycleStatuses {
   exited = '4',
   unstaked = '5'
 }
+
+export type FinalizedReport = {
+  validatorIndex: string
+  blsPublicKey: string
+  withdrawalCredentials: string
+  slashed: false
+  activeBalance: string
+  effectiveBalance: string
+  exitEpoch: string
+  activationEpoch: string
+  withdrawalEpoch: string
+  currentCheckpointEpoch: number
+  lastDepositIndex: string
+}
+
+export type EligibleValidator = {
+  beaconReport: FinalizedReport
+  totalDETHRewardsReceived: string
+  selected: boolean
+}
