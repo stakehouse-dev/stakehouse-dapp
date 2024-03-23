@@ -27,6 +27,7 @@ import {
   JoinStakehouse,
   CreateStakehouse,
   RiskDisclaimer,
+  KETHDisclaimer,
   GraphqlPlayground,
   TermsPage,
   NotFoundPage
@@ -261,6 +262,7 @@ function App() {
                           <Route path="sign-in" element={<WalletConnect />} />
                           <Route path="terms" element={<TermsPage />} />
                           <Route path="riskdisclaimer" element={<RiskDisclaimer />} />
+                          <Route path="kethdisclaimer" element={<KETHDisclaimer />} />
                           <Route path="*" element={<NotFoundPage />} />
                         </Route>
                       </Routes>

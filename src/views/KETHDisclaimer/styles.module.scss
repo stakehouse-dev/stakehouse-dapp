@@ -1,0 +1,28 @@
+.content {
+  @apply text-white;
+  width: 90%;
+  max-width: 960px;
+  margin: auto;
+  margin-top: 65px;
+  display: flex;
+  flex-direction: column;
+  font-size: smaller;
+  line-height: inherit;
+  padding-bottom: 100px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  a {
+    @apply text-primary;
+    font-size: inherit;
+  }
+
+  ol, ul {
+    list-style: revert;
+    list-style-position:revert;
+}
+
+}

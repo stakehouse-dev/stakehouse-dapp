@@ -117,7 +117,7 @@ const IndexChart: FC<{ indexId: string }> = ({ indexId }) => {
       <div className="linkWrapper">
         <a
           className="link"
-          href={`https://site-ipfs.joinstakehouse.com/monitoring/index/${indexId}?network=${
+          href={`https://joinstakehouse.com/monitoring/index/${indexId}?network=${
             activeChain?.id === mainnet.id ? 'mainnet' : 'goerli'
           }`}
           target="_blank"
